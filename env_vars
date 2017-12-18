@@ -17,9 +17,13 @@ export BridgeWorkerEmail_uat=bridgeit+worker@sagebase.org
 export BridgeWorkerStudy_develop=api
 export BridgeWorkerStudy_prod=api
 export BridgeWorkerStudy_uat=api
+export RecordIdsBucket_develop=org-sagebridge-exporter-recordids-develop
+export RecordIdsBucket_prod=org-sagebridge-exporter-recordids-prod
+export RecordIdsBucket_uat=org-sagebridge-exporter-recordids-uat
 export SynapsePrincipalId_develop=3330889
 export SynapsePrincipalId_prod=3325672
 export SynapsePrincipalId_uat=3327942
 export SynapseUser_develop=BridgeExporterDev
 export SynapseUser_prod=BridgeExporter
 export SynapseUser_uat=BridgeExporterStaging
+
