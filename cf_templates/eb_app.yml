@@ -299,7 +299,11 @@ Resources:
             Effect: Allow
             Resource:
               - !Sub 'arn:aws:s3:::${RecordIdsBucket}/*'
-              - Fn::ImportValue: !Sub "bridgepf-develop-AttachmentBucket"
+              - !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !ImportValue "bridgepf-develop-AttachmentBucket"
+                  - '/*'
   AWSIAMServiceRole:
     Type: 'AWS::IAM::Role'
     Properties:
