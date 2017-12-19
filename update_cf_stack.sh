@@ -7,6 +7,7 @@ eval export "BridgeWorkerEmail=\$BridgeWorkerEmail_$TRAVIS_BRANCH"
 eval export "BridgeWorkerStudy=\$BridgeWorkerStudy_$TRAVIS_BRANCH"
 eval export "BridgeWorkerPassword=\$BridgeWorkerPassword_$TRAVIS_BRANCH"
 eval export "Env=\$Env_$TRAVIS_BRANCH"
+eval export "RecordIdsBucket=\$RecordIdsBucket_$TRAVIS_BRANCH"
 eval export "SynapseApiKey=\$SynapseApiKey_$TRAVIS_BRANCH"
 eval export "SynapsePrincipalId=\$SynapsePrincipalId_$TRAVIS_BRANCH"
 eval export "SynapseUser=\$SynapseUser_$TRAVIS_BRANCH"
@@ -27,6 +28,7 @@ ParameterKey=BridgeWorkerStudy,ParameterValue=$BridgeWorkerStudy \
 ParameterKey=BridgeWorkerPassword,ParameterValue=$BridgeWorkerPassword \
 ParameterKey=EC2InstanceType,ParameterValue=t2.micro \
 ParameterKey=Env,ParameterValue=$Env \
+ParameterKey=RecordIdsBucket,ParameterValue=$RecordIdsBucket \
 ParameterKey=SynapseApiKey,ParameterValue=$SynapseApiKey \
 ParameterKey=SynapsePrincipalId,ParameterValue=$SynapsePrincipalId \
 ParameterKey=SynapseUser,ParameterValue=$SynapseUser

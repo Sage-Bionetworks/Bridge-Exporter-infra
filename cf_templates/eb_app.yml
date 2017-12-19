@@ -129,6 +129,9 @@ Parameters:
   Env:
     Type: String
     Default: param_place_holder
+  RecordIdsBucket:
+    Type: String
+    Default: param_place_holder
   SynapseApiKey:
     Type: String
     Default: param_place_holder
@@ -237,6 +240,66 @@ Resources:
         Type: SQS/HTTP
   AWSS3AppDeployBucket:
     Type: 'AWS::S3::Bucket'
+  AWSIAMDynamoManagedPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: DynamoGetBridgeData
+              Action:
+                - 'dynamodb:GetItem'
+                - 'dynamodb:Query'
+              Effect: Allow
+              Resource:
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-${BridgeUser}-HealthDataRecord3'
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-${BridgeUser}-HealthDataRecord3/index/uploadDate-index'
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-${BridgeUser}-HealthDataRecord3/index/study-uploadedOn-index'
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-${BridgeUser}-ParticipantOptions'
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-${BridgeUser}-Study'
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-${BridgeUser}-UploadSchema'
+            - Sid: DynamoGetPutExportTime
+              Action:
+                - 'dynamodb:GetItem'
+                - 'dynamodb:PutItem'
+              Effect: Allow
+              Resource:
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-${BridgeUser}-ExportTime'
+            - Sid: DynamoManageSynapseTables
+              Action:
+                - 'dynamodb:GetItem'
+                - 'dynamodb:PutItem'
+              Effect: Allow
+              Resource:
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-exporter-testing-SynapseMetaTables'
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-exporter-testing-SynapseTables'
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-exporter-SynapseMetaTables'
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-exporter-SynapseTables'
+            - Sid: DynamoPutAttachments
+              Action:
+                - 'dynamodb:PutItem'
+              Effect: Allow
+              Resource:
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-${BridgeUser}-HealthDataAttachment'
+            - Sid: DynamoScanStudyTable
+              Action:
+                - 'dynamodb:Scan'
+              Effect: Allow
+              Resource:
+                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-${BridgeUser}-Study'
+  AWSIAMS3ManagedPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            Action:
+              - 's3:PutObject'
+              - 's3:GetObject'
+            Effect: Allow
+            Resource:
+              - !Sub 'arn:aws:s3:::${RecordIdsBucket}/*'
+              - Fn::ImportValue: !Sub "bridgepf-${BridgeEnv}-AttachmentBucket"
   AWSIAMServiceRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -271,6 +334,8 @@ Resources:
       Path: /
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier'
+        - !Ref AWSIAMDynamoManagedPolicy
+        - !Ref AWSIAMS3ManagedPolicy
   AWSIAMInstanceProfile:
     Type: 'AWS::IAM::InstanceProfile'
     Properties:
@@ -298,8 +363,9 @@ Resources:
     Type: 'AWS::IAM::Group'
     Properties:
       ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonSNSFullAccess
-        - arn:aws:iam::aws:policy/AmazonSQSFullAccess
+        - 'arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier'
+        - !Ref AWSIAMDynamoManagedPolicy
+        - !Ref AWSIAMS3ManagedPolicy
   AWSLBSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -340,3 +406,7 @@ Outputs:
     Value: !Ref AWSS3AppDeployBucket
     Export:
       Name: !Sub '${AWS::StackName}-AppDeployBucket'
+  RecordIdsBucket:
+    Value: !Ref RecordIdsBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-RecordIdsBucket'
