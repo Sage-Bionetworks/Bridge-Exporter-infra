@@ -28,6 +28,8 @@ ParameterKey=BridgeWorkerStudy,ParameterValue=$BridgeWorkerStudy \
 ParameterKey=BridgeWorkerPassword,ParameterValue=$BridgeWorkerPassword \
 ParameterKey=EC2InstanceType,ParameterValue=t2.micro \
 ParameterKey=Env,ParameterValue=$Env \
+ParameterKey=NewRelicAppName,ParameterValue=$STACK_NAME \
+ParameterKey=NewRelicLicenseKey,ParameterValue=$NewRelicLicenseKey \
 ParameterKey=RecordIdsBucket,ParameterValue=$RecordIdsBucket \
 ParameterKey=SynapseApiKey,ParameterValue=$SynapseApiKey \
 ParameterKey=SynapsePrincipalId,ParameterValue=$SynapsePrincipalId \
