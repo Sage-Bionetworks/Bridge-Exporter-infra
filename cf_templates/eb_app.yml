@@ -129,6 +129,13 @@ Parameters:
   Env:
     Type: String
     Default: param_place_holder
+  NewRelicAppName:
+    Type: String
+    Default: param_place_holder
+  NewRelicLicenseKey:
+    Type: String
+    Default: param_place_holder
+    NoEcho: true
   RecordIdsBucket:
     Type: String
     Default: param_place_holder
@@ -211,6 +218,12 @@ Resources:
         - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: bridge.worker.studay
           Value: !Ref BridgeWorkerStudy
+        - Namespace: 'aws:elasticbeanstalk:application:environment'
+          OptionName: NEW_RELIC_APP_NAME
+          Value: !Ref NewRelicAppName
+        - Namespace: 'aws:elasticbeanstalk:application:environment'
+          OptionName: NEW_RELIC_LICENSE_KEY
+          Value: !Ref NewRelicLicenseKey
         - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: synapse.api.key
           Value: !Ref SynapseApiKey
