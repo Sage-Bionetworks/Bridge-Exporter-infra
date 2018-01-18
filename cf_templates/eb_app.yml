@@ -476,7 +476,7 @@ Resources:
         - - !Ref 'AWS::StackName'
           - UploadAutocompleteErrorCount
       Namespace: LogMetrics/Errors
-      Period: 43200
+      Period: 3600
       Statistic: Sum
       Threshold: 50
       TreatMissingData: notBreaching
@@ -513,7 +513,7 @@ Resources:
         - - !Ref 'AWS::StackName'
           - RequestErrorCount
       Namespace: LogMetrics/Errors
-      Period: 43200
+      Period: 3600
       Statistic: Sum
       Threshold: 10
       TreatMissingData: notBreaching
@@ -548,7 +548,7 @@ Resources:
         - - !Ref 'AWS::StackName'
           - RequestWarningCount
       Namespace: LogMetrics/Warnings
-      Period: 43200
+      Period: 3600
       Statistic: Sum
       Threshold: 100
       TreatMissingData: notBreaching
