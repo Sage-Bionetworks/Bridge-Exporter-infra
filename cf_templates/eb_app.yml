@@ -317,6 +317,24 @@ Resources:
                 - - 'arn:aws:s3:::'
                   - !ImportValue "bridgepf-develop-AttachmentBucket"
                   - '/*'
+  # cloudwatch integration https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/AWSHowTo.cloudwatchlogs.html
+  AWSIAMCloudwatchIntegrationManagedPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            Action:
+              - 'logs:CreateLogGroup'
+              - 'logs:CreateLogStream'
+              - 'logs:GetLogEvents'
+              - 'logs:PutLogEvents'
+              - 'logs:DescribeLogGroups'
+              - 'logs:DescribeLogStreams'
+              - 'logs:PutRetentionPolicy'
+            Effect: Allow
+            Resource:
+              - !Sub 'arn:aws:logs:${AWS::Region}:*:*'
   AWSIAMServiceRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -353,6 +371,7 @@ Resources:
         - 'arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier'
         - !Ref AWSIAMDynamoManagedPolicy
         - !Ref AWSIAMS3ManagedPolicy
+        - !Ref AWSIAMCloudwatchIntegrationManagedPolicy
   AWSIAMInstanceProfile:
     Type: 'AWS::IAM::InstanceProfile'
     Properties:
@@ -417,7 +436,122 @@ Resources:
           FromPort: '80'
           ToPort: '80'
           SourceSecurityGroupId: !Ref AWSLBSecurityGroup
-
+  AWSLogsTomcatLogGroup:
+    Type: "AWS::Logs::LogGroup"
+    Properties:
+      LogGroupName: !Join
+        - '/'
+        - - /aws/elasticbeanstalk
+          - !Ref 'AWS::StackName'
+          - var/log/tomcat8/catalina.out
+      RetentionInDays: 90
+  AWSCWUploadAutocompleteErrorMetricFilter:
+    Type: "AWS::Logs::MetricFilter"
+    DependsOn: AWSLogsTomcatLogGroup
+    Properties:
+      LogGroupName: !Join
+        - '/'
+        - - /aws/elasticbeanstalk
+          - !Ref 'AWS::StackName'
+          - var/log/tomcat8/catalina.out
+      FilterPattern: 'ERROR S3EventNotificationCallback'
+      MetricTransformations:
+        -
+          MetricValue: "1"
+          MetricNamespace: "LogMetrics/Errors"
+          MetricName: !Join
+            - '-'
+            - - !Ref 'AWS::StackName'
+              - UploadAutocompleteErrorCount
+  AWSCWUploadAutocompleteErrorAlarm:
+    Type: "AWS::CloudWatch::Alarm"
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+        - !Ref AWSSNSTopic
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      MetricName: !Join
+        - '-'
+        - - !Ref 'AWS::StackName'
+          - UploadAutocompleteErrorCount
+      Namespace: LogMetrics/Errors
+      Period: 43200
+      Statistic: Sum
+      Threshold: 50
+      TreatMissingData: notBreaching
+  AWSCWRequestErrorMetricFilter:
+    Type: "AWS::Logs::MetricFilter"
+    DependsOn: AWSLogsTomcatLogGroup
+    Properties:
+      LogGroupName: !Join
+        - '/'
+        - - /aws/elasticbeanstalk
+          - !Ref 'AWS::StackName'
+          - var/log/tomcat8/catalina.out
+      FilterPattern: 'ERROR
+                      - FileChunkUploadWorker
+                      - S3EventNotificationCallback'
+      MetricTransformations:
+        -
+          MetricValue: "1"
+          MetricNamespace: "LogMetrics/Errors"
+          MetricName: !Join
+            - '-'
+            - - !Ref 'AWS::StackName'
+              - RequestErrorCount
+  AWSCWRequestErrorAlarm:
+    Type: "AWS::CloudWatch::Alarm"
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+        - !Ref AWSSNSTopic
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      MetricName: !Join
+        - '-'
+        - - !Ref 'AWS::StackName'
+          - RequestErrorCount
+      Namespace: LogMetrics/Errors
+      Period: 43200
+      Statistic: Sum
+      Threshold: 10
+      TreatMissingData: notBreaching
+  AWSCWRequestWarningMetricFilter:
+    Type: "AWS::Logs::MetricFilter"
+    DependsOn: AWSLogsTomcatLogGroup
+    Properties:
+      LogGroupName: !Join
+        - '/'
+        - - /aws/elasticbeanstalk
+          - !Ref 'AWS::StackName'
+          - var/log/tomcat8/catalina.out
+      FilterPattern: 'WARN'
+      MetricTransformations:
+        -
+          MetricValue: "1"
+          MetricNamespace: "LogMetrics/Warnings"
+          MetricName: !Join
+            - '-'
+            - - !Ref 'AWS::StackName'
+              - RequestWarningCount
+  AWSCWRequestWarningAlarm:
+    Type: "AWS::CloudWatch::Alarm"
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+        - !Ref AWSSNSTopic
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      MetricName: !Join
+        - '-'
+        - - !Ref 'AWS::StackName'
+          - RequestWarningCount
+      Namespace: LogMetrics/Warnings
+      Period: 43200
+      Statistic: Sum
+      Threshold: 100
+      TreatMissingData: notBreaching
 Outputs:
   AWSS3AppDeployBucket:
     Value: !Ref AWSS3AppDeployBucket
