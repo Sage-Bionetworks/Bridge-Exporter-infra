@@ -478,7 +478,7 @@ Resources:
       Namespace: LogMetrics/Errors
       Period: 3600
       Statistic: Sum
-      Threshold: 50
+      Threshold: 10
       TreatMissingData: notBreaching
   AWSCWRequestErrorMetricFilter:
     Type: "AWS::Logs::MetricFilter"
