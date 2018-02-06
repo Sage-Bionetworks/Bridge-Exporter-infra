@@ -1,5 +1,4 @@
 # environment variables for Sage-Bionetworks/Bridge-Exporter-infra
-export AwsDefaultVpcId=vpc-9c70bbf9
 export AwsSnsNotificationEndpoint_develop=bridge-exporter-develop@sagebase.org
 export AwsSnsNotificationEndpoint_prod=bridge-exporter-prod@sagebase.org
 export AwsSnsNotificationEndpoint_uat=bridge-exporter-uat@sagebase.org
