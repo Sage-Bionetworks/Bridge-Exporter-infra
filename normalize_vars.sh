@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # double interpolate vars from travis
+eval export "AttachmentsBucket=\$AttachmentsBucket_$TRAVIS_BRANCH"
 eval export "AwsDefaultVpcId=\$AwsDefaultVpcId_$TRAVIS_BRANCH"
 eval export "AwsSnsNotificationEndpoint=\$AwsSnsNotificationEndpoint_$TRAVIS_BRANCH"
 eval export "BridgeEnv=\$BridgeEnv_$TRAVIS_BRANCH"

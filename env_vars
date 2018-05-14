@@ -1,4 +1,7 @@
 # environment variables for Sage-Bionetworks/Bridge-Exporter-infra
+export AttachmentsBucket_develop=org-sagebridge-attachment-develop
+export AttachmentsBucket_prod=org-sagebridge-attachment-prod
+export AttachmentsBucket_uat=org-sagebridge-attachment-uat
 export AwsSnsNotificationEndpoint_develop=bridge-exporter-develop@sagebase.org
 export AwsSnsNotificationEndpoint_prod=bridge-exporter-prod@sagebase.org
 export AwsSnsNotificationEndpoint_uat=bridge-exporter-uat@sagebase.org
@@ -19,10 +22,11 @@ export BridgeWorkerStudy_uat=api
 export RecordIdsBucket_develop=org-sagebridge-exporter-recordids-develop
 export RecordIdsBucket_prod=org-sagebridge-exporter-recordids-prod
 export RecordIdsBucket_uat=org-sagebridge-exporter-recordids-uat
+export SynapseGetColumnModelsRateLimitPerMinute=6
 export SynapsePrincipalId_develop=3330889
 export SynapsePrincipalId_prod=3325672
 export SynapsePrincipalId_uat=3327942
 export SynapseUser_develop=BridgeExporterDev
 export SynapseUser_prod=BridgeExporter
 export SynapseUser_uat=BridgeExporterStaging
-
+export ThreadPoolWorkerCount=4

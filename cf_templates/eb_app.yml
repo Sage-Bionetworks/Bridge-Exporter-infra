@@ -22,6 +22,9 @@
 Description: Bridge Exporter Application
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
+  AttachmentsBucket:
+    Type: String
+    Default: param_place_holder
   AwsDefaultVpcId:
     Description: The AWS account's default VPC id
     Type: String
@@ -143,10 +146,16 @@ Parameters:
     Type: String
     Default: param_place_holder
     NoEcho: true
+  SynapseGetColumnModelsRateLimitPerMinute:
+    Type: String
+    Default: param_place_holder
   SynapsePrincipalId:
     Type: String
     Default: param_place_holder
   SynapseUser:
+    Type: String
+    Default: param_place_holder
+  ThreadPoolWorkerCount:
     Type: String
     Default: param_place_holder
 Resources:
@@ -216,7 +225,7 @@ Resources:
           OptionName: bridge.worker.password
           Value: !Ref BridgeWorkerPassword
         - Namespace: 'aws:elasticbeanstalk:application:environment'
-          OptionName: bridge.worker.studay
+          OptionName: bridge.worker.study
           Value: !Ref BridgeWorkerStudy
         - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: NEW_RELIC_APP_NAME
@@ -228,11 +237,17 @@ Resources:
           OptionName: synapse.api.key
           Value: !Ref SynapseApiKey
         - Namespace: 'aws:elasticbeanstalk:application:environment'
+          OptionName: synapse.get.column.models.rate.limit.per.minute
+          Value: !Ref SynapseGetColumnModelsRateLimitPerMinute
+        - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: synapse.principal.id
           Value: !Ref SynapsePrincipalId
         - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: synapse.user
           Value: !Ref SynapseUser
+        - Namespace: 'aws:elasticbeanstalk:application:environment'
+          OptionName: threadpool.worker.count
+          Value: !Ref ThreadPoolWorkerCount
   AWSEBApplication:
     Type: 'AWS::ElasticBeanstalk::Application'
     Properties:
@@ -284,8 +299,6 @@ Resources:
                 - 'dynamodb:PutItem'
               Effect: Allow
               Resource:
-                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-exporter-testing-SynapseMetaTables'
-                - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-exporter-testing-SynapseTables'
                 - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-exporter-SynapseMetaTables'
                 - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${BridgeEnv}-exporter-SynapseTables'
             - Sid: DynamoPutAttachments
@@ -312,11 +325,7 @@ Resources:
             Effect: Allow
             Resource:
               - !Sub 'arn:aws:s3:::${RecordIdsBucket}/*'
-              - !Join
-                - ''
-                - - 'arn:aws:s3:::'
-                  - !ImportValue "bridgepf-develop-AttachmentBucket"
-                  - '/*'
+              - !Sub 'arn:aws:s3:::${AttachmentsBucket}/*'
   # cloudwatch integration https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/AWSHowTo.cloudwatchlogs.html
   AWSIAMCloudwatchIntegrationManagedPolicy:
     Type: 'AWS::IAM::ManagedPolicy'

@@ -6,6 +6,7 @@ aws cloudformation update-stack \
 --capabilities CAPABILITY_NAMED_IAM \
 --template-body file://cf_templates/eb_app.yml \
 --parameters \
+ParameterKey=AttachmentsBucket,ParameterValue="$AttachmentsBucket" \
 ParameterKey=AwsDefaultVpcId,ParameterValue="$AwsDefaultVpcId" \
 ParameterKey=AwsSnsNotificationEndpoint,ParameterValue="$AwsSnsNotificationEndpoint" \
 ParameterKey=AwsSolutionStackName,ParameterValue="$AwsSolutionStackName" \
@@ -20,6 +21,7 @@ ParameterKey=NewRelicAppName,ParameterValue="$STACK_NAME" \
 ParameterKey=NewRelicLicenseKey,ParameterValue="$NewRelicLicenseKey" \
 ParameterKey=RecordIdsBucket,ParameterValue="$RecordIdsBucket" \
 ParameterKey=SynapseApiKey,ParameterValue="$SynapseApiKey" \
+ParameterKey=SynapseGetColumnModelsRateLimitPerMinute,ParameterValue="$SynapseGetColumnModelsRateLimitPerMinute" \
 ParameterKey=SynapsePrincipalId,ParameterValue="$SynapsePrincipalId" \
-ParameterKey=SynapseUser,ParameterValue="$SynapseUser"
-
+ParameterKey=SynapseUser,ParameterValue="$SynapseUser" \
+ParameterKey=ThreadPoolWorkerCount,ParameterValue="$ThreadPoolWorkerCount"
