@@ -1,0 +1,22 @@
+template_path: templates/bridge-exporter.yaml
+stack_name: bridge-exporter-{{ environment_variable.TRAVIS_BRANCH }}
+parameters:
+  AttachmentsBucket: {{ environment_variable.AttachmentsBucket_develop }}
+  AwsDefaultVpcId: {{ environment_variable.AwsDefaultVpcId_develop }}
+  AwsSnsNotificationEndpoint: {{ environment_variable.AwsSnsNotificationEndpoint_develop }}
+  AwsSolutionStackName: {{ environment_variable.AwsSolutionStackName }}
+  BridgeEnv: {{ environment_variable.BridgeEnv_develop }}
+  BridgeUser: {{ environment_variable.BridgeUser }}
+  BridgeWorkerEmail: {{ environment_variable.BridgeWorkerEmail_develop }}
+  BridgeWorkerStudy: {{ environment_variable.BridgeWorkerStudy_develop }}
+  BridgeWorkerPassword: {{ environment_variable.BridgeWorkerPassword_develop }}
+  EC2InstanceType: t2.micro
+  Env: {{ environment_variable.Env_develop }}
+  NewRelicAppName: bridge-exporter-{{ environment_variable.TRAVIS_BRANCH }}
+  NewRelicLicenseKey: {{ environment_variable.NewRelicLicenseKey }}
+  RecordIdsBucket: {{ environment_variable.RecordIdsBucket_develop }}
+  SynapseApiKey: {{ environment_variable.SynapseApiKey_develop }}
+  SynapseGetColumnModelsRateLimitPerMinute: "{{ environment_variable.SynapseGetColumnModelsRateLimitPerMinute }}"
+  SynapsePrincipalId: "{{ environment_variable.SynapsePrincipalId_develop }}"
+  SynapseUser: {{ environment_variable.SynapseUser_develop }}
+  ThreadPoolWorkerCount: "{{ environment_variable.ThreadPoolWorkerCount }}"
