@@ -1,22 +1,22 @@
 template_path: templates/bridge-exporter.yaml
-stack_name: bridge-exporter-{{ environment_variable.TRAVIS_BRANCH }}
+stack_name: bridge-exporter-develop
 parameters:
-  AttachmentsBucket: {{ environment_variable.AttachmentsBucket_develop }}
-  AwsDefaultVpcId: {{ environment_variable.AwsDefaultVpcId_develop }}
-  AwsSnsNotificationEndpoint: {{ environment_variable.AwsSnsNotificationEndpoint_develop }}
-  AwsSolutionStackName: {{ environment_variable.AwsSolutionStackName }}
-  BridgeEnv: {{ environment_variable.BridgeEnv_develop }}
-  BridgeUser: {{ environment_variable.BridgeUser }}
-  BridgeWorkerEmail: {{ environment_variable.BridgeWorkerEmail_develop }}
-  BridgeWorkerStudy: {{ environment_variable.BridgeWorkerStudy_develop }}
-  BridgeWorkerPassword: {{ environment_variable.BridgeWorkerPassword_develop }}
+  AttachmentsBucket: org-sagebridge-attachment-develop
+  AwsDefaultVpcId: vpc-9c70bbf9
+  AwsSnsNotificationEndpoint: bridge-exporter-develop@sagebase.org
+  AwsSolutionStackName: '64bit Amazon Linux 2018.03 v3.0.1 running Tomcat 8 Java 8'
+  BridgeEnv: dev
+  BridgeUser: heroku
+  BridgeWorkerEmail: bridgeit+worker@sagebase.org
+  BridgeWorkerStudy: api
+  BridgeWorkerPassword: !ssm /bridge-exporter-develop/BridgeWorkerPassword
   EC2InstanceType: t2.micro
-  Env: {{ environment_variable.Env_develop }}
-  NewRelicAppName: bridge-exporter-{{ environment_variable.TRAVIS_BRANCH }}
-  NewRelicLicenseKey: {{ environment_variable.NewRelicLicenseKey }}
-  RecordIdsBucket: {{ environment_variable.RecordIdsBucket_develop }}
-  SynapseApiKey: {{ environment_variable.SynapseApiKey_develop }}
-  SynapseGetColumnModelsRateLimitPerMinute: "{{ environment_variable.SynapseGetColumnModelsRateLimitPerMinute }}"
-  SynapsePrincipalId: "{{ environment_variable.SynapsePrincipalId_develop }}"
-  SynapseUser: {{ environment_variable.SynapseUser_develop }}
-  ThreadPoolWorkerCount: "{{ environment_variable.ThreadPoolWorkerCount }}"
+  Env: develop
+  NewRelicAppName: bridge-exporter-develop
+  NewRelicLicenseKey: !ssm /infra/NewRelicLicenseKey
+  RecordIdsBucket: org-sagebridge-exporter-recordids-develop
+  SynapseApiKey: !ssm /bridge-exporter-develop/SynapseApiKey
+  SynapseGetColumnModelsRateLimitPerMinute: '6'
+  SynapsePrincipalId: '3330889'
+  SynapseUser: BridgeExporterDev
+  ThreadPoolWorkerCount: '4'

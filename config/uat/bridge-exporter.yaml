@@ -1,22 +1,22 @@
 template_path: templates/bridge-exporter.yaml
-stack_name: bridge-exporter-{{ environment_variable.TRAVIS_BRANCH }}
+stack_name: bridge-exporter-uat
 parameters:
-  AttachmentsBucket: {{ environment_variable.AttachmentsBucket_uat }}
-  AwsDefaultVpcId: {{ environment_variable.AwsDefaultVpcId_uat }}
-  AwsSnsNotificationEndpoint: {{ environment_variable.AwsSnsNotificationEndpoint_uat }}
-  AwsSolutionStackName: {{ environment_variable.AwsSolutionStackName }}
-  BridgeEnv: {{ environment_variable.BridgeEnv_uat }}
-  BridgeUser: {{ environment_variable.BridgeUser }}
-  BridgeWorkerEmail: {{ environment_variable.BridgeWorkerEmail_uat }}
-  BridgeWorkerStudy: {{ environment_variable.BridgeWorkerStudy_uat }}
-  BridgeWorkerPassword: {{ environment_variable.BridgeWorkerPassword_uat }}
+  AttachmentsBucket: org-sagebridge-attachment-uat
+  AwsDefaultVpcId: vpc-9c70bbf9
+  AwsSnsNotificationEndpoint: bridge-exporter-uat@sagebase.org
+  AwsSolutionStackName: '64bit Amazon Linux 2018.03 v3.0.1 running Tomcat 8 Java 8'
+  BridgeEnv: uat
+  BridgeUser: heroku
+  BridgeWorkerEmail: bridgeit+worker@sagebase.org
+  BridgeWorkerStudy: api
+  BridgeWorkerPassword: !ssm /bridge-exporter-uat/BridgeWorkerPassword
   EC2InstanceType: t2.micro
-  Env: {{ environment_variable.Env_uat }}
-  NewRelicAppName: bridge-exporter-{{ environment_variable.TRAVIS_BRANCH }}
-  NewRelicLicenseKey: {{ environment_variable.NewRelicLicenseKey }}
-  RecordIdsBucket: {{ environment_variable.RecordIdsBucket_uat }}
-  SynapseApiKey: {{ environment_variable.SynapseApiKey_uat }}
-  SynapseGetColumnModelsRateLimitPerMinute: "{{ environment_variable.SynapseGetColumnModelsRateLimitPerMinute }}"
-  SynapsePrincipalId: "{{ environment_variable.SynapsePrincipalId_uat }}"
-  SynapseUser: {{ environment_variable.SynapseUser_uat }}
-  ThreadPoolWorkerCount: "{{ environment_variable.ThreadPoolWorkerCount }}"
+  Env: staging
+  NewRelicAppName: bridge-exporter-uat
+  NewRelicLicenseKey: !ssm /infra/NewRelicLicenseKey
+  RecordIdsBucket: org-sagebridge-exporter-recordids-uat
+  SynapseApiKey: !ssm /bridge-exporter-uat/SynapseApiKey
+  SynapseGetColumnModelsRateLimitPerMinute: '6'
+  SynapsePrincipalId: '3327942'
+  SynapseUser: BridgeExporterStaging
+  ThreadPoolWorkerCount: '4'
