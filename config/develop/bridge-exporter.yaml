@@ -7,7 +7,7 @@ parameters:
   AwsSolutionStackName: '64bit Amazon Linux 2018.03 v3.0.1 running Tomcat 8 Java 8'
   BridgeEnv: dev
   BridgeUser: heroku
-  BridgeWorkerEmail: bridgeit+worker@sagebase.org
+  BridgeWorkerEmail: bridgeit+exporter@sagebase.org
   BridgeWorkerStudy: api
   BridgeWorkerPassword: !ssm /bridge-exporter-develop/BridgeWorkerPassword
   EC2InstanceType: t2.micro
