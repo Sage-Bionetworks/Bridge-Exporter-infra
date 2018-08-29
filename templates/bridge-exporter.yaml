@@ -24,35 +24,31 @@ AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   AttachmentsBucket:
     Type: String
-    Default: param_place_holder
   AwsDefaultVpcId:
     Description: The AWS account's default VPC id
-    Type: String
-    Default: param_place_holder
+    Type: "AWS::EC2::VPC::Id"
   AwsSnsNotificationEndpoint:
     Type: String
     Description: Email address for AWS SNS notifications
-    Default: param_place_holder
+    Default: bridge-exporter-develop@sagebase.org
   AwsSolutionStackName:
     Description: The AWS Solution Stack
     Type: String
-    Default: param_place_holder
   BridgeEnv:
     Type: String
-    Default: param_place_holder
+    Default: dev
   BridgeUser:
     Type: String
-    Default: param_place_holder
+    Default: heroku
   BridgeWorkerEmail:
     Type: String
-    Default: param_place_holder
+    Default: bridgeit+exporter@sagebase.org
   BridgeWorkerPassword:
     Type: String
-    Default: param_place_holder
     NoEcho: true
   BridgeWorkerStudy:
     Type: String
-    Default: param_place_holder
+    Default: api
   EC2InstanceType:
     Type: String
     Description: Instance type to use for Elastic Beanstalk Instances
@@ -131,33 +127,29 @@ Parameters:
       - f1.16xlarge
   Env:
     Type: String
-    Default: param_place_holder
+    Default: develop
   NewRelicAppName:
     Type: String
-    Default: param_place_holder
   NewRelicLicenseKey:
     Type: String
-    Default: param_place_holder
     NoEcho: true
   RecordIdsBucket:
     Type: String
-    Default: param_place_holder
   SynapseApiKey:
     Type: String
-    Default: param_place_holder
     NoEcho: true
   SynapseGetColumnModelsRateLimitPerMinute:
     Type: String
-    Default: param_place_holder
+    Default: '6'
   SynapsePrincipalId:
     Type: String
-    Default: param_place_holder
+    Default: '3330889'
   SynapseUser:
     Type: String
-    Default: param_place_holder
+    Default: BridgeExporterDev
   ThreadPoolWorkerCount:
     Type: String
-    Default: param_place_holder
+    Default: '4'
 Resources:
   AWSEBConfigurationTemplate:
     Type: 'AWS::ElasticBeanstalk::ConfigurationTemplate'
