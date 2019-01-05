@@ -558,6 +558,7 @@ Resources:
       FilterPattern: 'ERROR
                       - FileChunkUploadWorker
                       - S3EventNotificationCallback
+                      - nwu-mobile-toolbox-dev
                       - psu-m2c2'
       MetricTransformations:
         -
