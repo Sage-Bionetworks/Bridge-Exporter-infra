@@ -1,4 +1,4 @@
-template_path: templates/bridge-exporter.yaml
+template_path: bridge-exporter.yaml
 stack_name: bridge-exporter-develop
 parameters:
   AttachmentsBucket: org-sagebridge-attachment-develop
