@@ -149,9 +149,14 @@ Resources:
         - Namespace: 'aws:autoscaling:launchconfiguration'
           OptionName: SecurityGroups
           Value: !Join
-            - '-'
+            - ''
             - - !Ref 'AWS::StackName'
+              - '-'
               - AWSEC2SecurityGroup
+              - ','
+              - 'bridge-BastianSecurityGroup-OF2LPUIH565D'
+              - ','
+              - 'bridge-VpnSecurityGroup-ZF7Q9NQBMQD'
         - Namespace: 'aws:elasticbeanstalk:command'
           OptionName: DeploymentPolicy
           Value: 'AllAtOnce'
