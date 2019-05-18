@@ -10,9 +10,6 @@ Parameters:
     Type: String
     Description: Email address for AWS SNS notifications
     Default: bridge-exporter-develop@sagebase.org
-  AwsSolutionStackName:
-    Description: The AWS Solution Stack
-    Type: String
   BridgeEnv:
     Type: String
     Default: dev
@@ -134,7 +131,7 @@ Resources:
     Type: 'AWS::ElasticBeanstalk::ConfigurationTemplate'
     Properties:
       ApplicationName: !Ref AWSEBApplication
-      SolutionStackName: !Ref AwsSolutionStackName
+      SolutionStackName: '64bit Amazon Linux 2018.03 v3.1.3 running Tomcat 8.5 Java 8'
       OptionSettings:
         # EB environment options
         - Namespace: 'aws:elasticbeanstalk:xray'
