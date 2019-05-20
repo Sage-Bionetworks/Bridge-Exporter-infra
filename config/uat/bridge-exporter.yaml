@@ -4,7 +4,6 @@ parameters:
   AttachmentsBucket: org-sagebridge-attachment-uat
   AwsDefaultVpcId: vpc-9c70bbf9
   AwsSnsNotificationEndpoint: bridge-exporter-uat@sagebase.org
-  AwsSolutionStackName: '64bit Amazon Linux 2018.03 v3.0.1 running Tomcat 8 Java 8'
   BridgeEnv: uat
   BridgeUser: heroku
   BridgeWorkerEmail: bridgeit+exporter@sagebase.org
