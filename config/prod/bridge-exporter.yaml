@@ -11,11 +11,14 @@ parameters:
   BridgeWorkerPassword: !ssm /bridge-exporter-prod/BridgeWorkerPassword
   EC2InstanceType: t2.micro
   Env: production
+  ExporterSqsQueueUrl: https://sqs.us-east-1.amazonaws.com/649232250620/Bridge-EX-Request-prod
   NewRelicAppName: bridge-exporter-prod
   NewRelicLicenseKey: !ssm /infra/NewRelicLicenseKey
   RecordIdsBucket: org-sagebridge-exporter-recordids-prod
+  S3NotificationSqsQueueUrl: https://sqs.us-east-1.amazonaws.com/649232250620/Bridge-UploadComplete-Notification-prod
   SynapseApiKey: !ssm /bridge-exporter-prod/SynapseApiKey
   SynapseGetColumnModelsRateLimitPerMinute: '6'
   SynapsePrincipalId: '3325672'
+  SynapseStorageLocationId: '40826'
   SynapseUser: BridgeExporter
   ThreadPoolWorkerCount: '4'
