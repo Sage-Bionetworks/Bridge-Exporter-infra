@@ -1,8 +1,8 @@
 template_path: bridge-exporter.yaml
 stack_name: bridge-exporter-uat
 parameters:
-  AttachmentsBucket: org-sagebridge-attachment-uat
-  AwsDefaultVpcId: vpc-9c70bbf9
+  AttachmentsBucket: org-sagebridge-attachment-devstaging
+  AwsDefaultVpcId: vpc-f389e98a
   AwsSnsNotificationEndpoint: bridge-exporter-uat@sagebase.org
   BridgeEnv: uat
   BridgeUser: heroku
@@ -11,11 +11,14 @@ parameters:
   BridgeWorkerPassword: !ssm /bridge-exporter-uat/BridgeWorkerPassword
   EC2InstanceType: t2.micro
   Env: staging
+  ExporterSqsQueueUrl: https://sqs.us-east-1.amazonaws.com/420786776710/Bridge-EX-Request-staging
   NewRelicAppName: bridge-exporter-uat
   NewRelicLicenseKey: !ssm /infra/NewRelicLicenseKey
-  RecordIdsBucket: org-sagebridge-exporter-recordids-uat
+  RecordIdsBucket: org-sagebridge-exporter-recordids-devstaging
+  S3NotificationSqsQueueUrl: https://sqs.us-east-1.amazonaws.com/420786776710/Bridge-UploadComplete-Notification-staging
   SynapseApiKey: !ssm /bridge-exporter-uat/SynapseApiKey
   SynapseGetColumnModelsRateLimitPerMinute: '6'
   SynapsePrincipalId: '3327942'
+  SynapseStorageLocationId: '41271'
   SynapseUser: BridgeExporterStaging
   ThreadPoolWorkerCount: '4'

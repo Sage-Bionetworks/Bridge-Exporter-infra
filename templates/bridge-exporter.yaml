@@ -104,12 +104,16 @@ Parameters:
   Env:
     Type: String
     Default: develop
+  ExporterSqsQueueUrl:
+    Type: String
   NewRelicAppName:
     Type: String
   NewRelicLicenseKey:
     Type: String
     NoEcho: true
   RecordIdsBucket:
+    Type: String
+  S3NotificationSqsQueueUrl:
     Type: String
   SynapseApiKey:
     Type: String
@@ -120,6 +124,8 @@ Parameters:
   SynapsePrincipalId:
     Type: String
     Default: '3330889'
+  SynapseStorageLocationId:
+    Type: String
   SynapseUser:
     Type: String
     Default: BridgeExporterDev
@@ -181,6 +187,12 @@ Resources:
           OptionName: ENV
           Value: !Ref Env
         - Namespace: 'aws:elasticbeanstalk:application:environment'
+          OptionName: !Join
+            - ''
+            - - !Ref BridgeEnv
+              - '.attachment.bucket'
+          Value: !Ref AttachmentsBucket
+        - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: bridge.env
           Value: !Ref BridgeEnv
         - Namespace: 'aws:elasticbeanstalk:application:environment'
@@ -196,11 +208,29 @@ Resources:
           OptionName: bridge.worker.study
           Value: !Ref BridgeWorkerStudy
         - Namespace: 'aws:elasticbeanstalk:application:environment'
+          OptionName: !Join
+            - ''
+            - - !Ref BridgeEnv
+              - '.exporter.request.sqs.queue.url'
+          Value: !Ref ExporterSqsQueueUrl
+        - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: NEW_RELIC_APP_NAME
           Value: !Ref 'NewRelicAppName'
         - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: NEW_RELIC_LICENSE_KEY
           Value: !Ref NewRelicLicenseKey
+        - Namespace: 'aws:elasticbeanstalk:application:environment'
+          OptionName: !Join
+            - ''
+            - - !Ref BridgeEnv
+              - '.record.id.override.bucket'
+          Value: !Ref RecordIdsBucket
+        - Namespace: 'aws:elasticbeanstalk:application:environment'
+          OptionName: !Join
+            - ''
+            - - !Ref BridgeEnv
+              - '.s3.notification.sqs.queue.url'
+          Value: !Ref S3NotificationSqsQueueUrl
         - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: synapse.api.key
           Value: !Ref SynapseApiKey
@@ -210,6 +240,12 @@ Resources:
         - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: synapse.principal.id
           Value: !Ref SynapsePrincipalId
+        - Namespace: 'aws:elasticbeanstalk:application:environment'
+          OptionName: !Join
+            - ''
+            - - !Ref BridgeEnv
+              - '.synapse.storage.location.id'
+          Value: !Ref SynapseStorageLocationId
         - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: synapse.user
           Value: !Ref SynapseUser
