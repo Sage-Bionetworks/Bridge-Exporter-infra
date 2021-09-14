@@ -9,7 +9,7 @@ parameters:
   BridgeWorkerEmail: bridgeit+exporter@sagebase.org
   BridgeWorkerStudy: api
   BridgeWorkerPassword: !ssm /bridge-exporter-develop/BridgeWorkerPassword
-  EC2InstanceType: t2.micro
+  EC2InstanceType: t2.small
   Env: develop
   ExporterSqsQueueUrl: https://sqs.us-east-1.amazonaws.com/420786776710/Bridge-EX-Request-develop
   NewRelicAppName: bridge-exporter-develop
