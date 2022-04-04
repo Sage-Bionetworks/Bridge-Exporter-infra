@@ -17,6 +17,7 @@ parameters:
   RecordIdsBucket: org-sagebridge-exporter-recordids-devstaging
   S3NotificationSqsQueueUrl: https://sqs.us-east-1.amazonaws.com/420786776710/Bridge-UploadComplete-Notification-staging
   SynapseApiKey: !ssm /bridge-exporter-uat/SynapseApiKey
+  SynapseAccessToken: !ssm /bridge-exporter-uat/SynapseAccessToken
   SynapseGetColumnModelsRateLimitPerMinute: '6'
   SynapsePrincipalId: '3327942'
   SynapseStorageLocationId: '41271'
