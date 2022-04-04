@@ -118,6 +118,9 @@ Parameters:
   SynapseApiKey:
     Type: String
     NoEcho: true
+  SynapseAccessToken:
+    Type: String
+    NoEcho: true
   SynapseGetColumnModelsRateLimitPerMinute:
     Type: String
     Default: '6'
@@ -234,6 +237,9 @@ Resources:
         - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: synapse.api.key
           Value: !Ref SynapseApiKey
+        - Namespace: 'aws:elasticbeanstalk:application:environment'
+          OptionName: synapse.access.token
+          Value: !Ref SynapseAccessToken
         - Namespace: 'aws:elasticbeanstalk:application:environment'
           OptionName: synapse.get.column.models.rate.limit.per.minute
           Value: !Ref SynapseGetColumnModelsRateLimitPerMinute
