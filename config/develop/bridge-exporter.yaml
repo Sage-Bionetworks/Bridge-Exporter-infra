@@ -16,7 +16,6 @@ parameters:
   NewRelicLicenseKey: !ssm /infra/NewRelicLicenseKey
   RecordIdsBucket: org-sagebridge-exporter-recordids-devdevelop
   S3NotificationSqsQueueUrl: https://sqs.us-east-1.amazonaws.com/420786776710/Bridge-UploadComplete-Notification-develop
-  SynapseApiKey: !ssm /bridge-exporter-develop/SynapseApiKey
   SynapseAccessToken: !ssm /bridge-exporter-develop/SynapseAccessToken
   SynapseGetColumnModelsRateLimitPerMinute: '6'
   SynapsePrincipalId: '3330889'
