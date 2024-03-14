@@ -3,10 +3,8 @@ stack_name: bridge-exporter-uat
 parameters:
   AttachmentsBucket: org-sagebridge-attachment-devstaging
   AwsDefaultVpcId: vpc-f389e98a
-  AwsSnsNotificationEndpoint: bridge-exporter-uat@sagebase.org
   BridgeEnv: uat
   BridgeUser: heroku
-  BridgeWorkerEmail: bridgeit+exporter@sagebase.org
   BridgeWorkerStudy: api
   BridgeWorkerPassword: !ssm /bridge-exporter-uat/BridgeWorkerPassword
   EC2InstanceType: t2.small
