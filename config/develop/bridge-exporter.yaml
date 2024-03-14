@@ -3,10 +3,8 @@ stack_name: bridge-exporter-develop
 parameters:
   AttachmentsBucket: org-sagebridge-attachment-devdevelop
   AwsDefaultVpcId: vpc-f389e98a
-  AwsSnsNotificationEndpoint: bridge-exporter-develop@sagebase.org
   BridgeEnv: dev
   BridgeUser: heroku
-  BridgeWorkerEmail: bridgeit+exporter@sagebase.org
   BridgeWorkerStudy: api
   BridgeWorkerPassword: !ssm /bridge-exporter-develop/BridgeWorkerPassword
   EC2InstanceType: t2.small
